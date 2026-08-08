@@ -13,38 +13,77 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Styling with CSS & Background Image
+# Robust CSS Injection using Exact Data-TestIDs for Dark UI Contrast
 st.markdown("""
     <style>
-    .main {
-        background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
-                    url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1920&q=80');
-        background-size: cover;
-        background-attachment: fixed;
+    /* Force dark background with vibrant gaming gradient overlay */
+    .stApp {
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%) !important;
+        background-attachment: fixed !important;
     }
-    .stMetric {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        padding: 15px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-    h1, h2, h3 {
+    
+    /* Global text color overrides for high readability */
+    h1, h2, h3, h4, h5, h6, p, label, span, div {
         color: #f8fafc !important;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
     }
+    
+    /* Title glowing accent */
+    .main-title {
+        font-size: 2.3rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #a855f7, #ec4899, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0px;
+    }
+    
+    /* Card Container Styling for Metrics & Controls */
+    [data-testid="stMetric"] {
+        background: rgba(30, 41, 59, 0.75) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        border-radius: 12px !important;
+        padding: 15px !important;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
+        backdrop-filter: blur(10px);
+    }
+    
+    [data-testid="stMetricValue"] {
+        color: #38bdf8 !important;
+        font-weight: 700 !important;
+    }
+    
+    /* Styled Tab Bar */
+    button[data-baseweb="tab"] {
+        background-color: rgba(30, 41, 59, 0.5) !important;
+        border-radius: 8px 8px 0px 0px !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #94a3b8 !important;
+        font-weight: 600 !important;
+        padding: 10px 20px !important;
+    }
+    
+    button[aria-selected="true"] {
+        background: linear-gradient(90deg, #6366f1, #a855f7) !important;
+        color: #ffffff !important;
+        border: none !important;
+    }
+    
+    /* Action Buttons */
     .stButton>button {
-        background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
-        color: white;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 24px;
-        transition: all 0.3s ease;
+        background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%) !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 12px 28px !important;
+        box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4) !important;
+        width: 100%;
     }
+    
     .stButton>button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
+        box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6) !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -61,9 +100,9 @@ def load_artifacts():
 
 model, best_threshold = load_artifacts()
 
-# App Header
-st.title("🎮 Cookie Cats Retention Intelligence")
-st.caption("A/B Testing Analytics & Machine Learning Early Churn Prediction Engine")
+# Custom Header Section
+st.markdown('<h1 class="main-title">🎮 Cookie Cats Retention Intelligence</h1>', unsafe_allow_html=True)
+st.markdown("<p style='color: #cbd5e1 !important; font-size: 1.05rem;'>A/B Testing Analytics & Machine Learning Early Churn Prediction Engine</p>", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -71,30 +110,32 @@ st.markdown("---")
 tab1, tab2, tab3 = st.tabs(["📊 A/B Experimentation", "🤖 Individual Risk Assessment", "📈 Dataset Analytics"])
 
 with tab1:
-    st.subheader("Level Progression & A/B Experiment Results")
+    st.markdown("### 🏆 Level Progression & A/B Experiment Results")
     
     col1, col2, col3 = st.columns(3)
     col1.metric("Gate 30 (7-Day Retention)", "19.02%", "+0.82% boost")
     col2.metric("Gate 40 (7-Day Retention)", "18.20%", "-0.82% drop")
     col3.metric("A/B Decision Confidence", "99.90%", "Bootstrap Superiority")
     
-    st.markdown("---")
+    st.markdown("<br>", unsafe_allow_html=True)
     
     fig_ab = go.Figure(data=[
         go.Bar(name='1-Day Retention', x=['Gate 30', 'Gate 40'], y=[44.82, 44.23], marker_color='#818cf8'),
         go.Bar(name='7-Day Retention', x=['Gate 30', 'Gate 40'], y=[19.02, 18.20], marker_color='#c084fc')
     ])
     fig_ab.update_layout(
-        title="Retention Rates by Gate Variant (%)",
+        title=dict(text="Retention Rates by Gate Variant (%)", font=dict(color='#f8fafc', size=18)),
         barmode='group',
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(color='white')
+        paper_bgcolor='rgba(15, 23, 42, 0.6)',
+        plot_bgcolor='rgba(15, 23, 42, 0.6)',
+        font=dict(color='#f8fafc'),
+        xaxis=dict(gridcolor='rgba(255, 255, 255, 0.1)'),
+        yaxis=dict(gridcolor='rgba(255, 255, 255, 0.1)')
     )
     st.plotly_chart(fig_ab, use_container_width=True)
 
 with tab2:
-    st.subheader("Player Retention Risk Calculator")
+    st.markdown("### 🤖 Player Retention Risk Calculator")
     
     col_a, col_b = st.columns(2)
     with col_a:
@@ -120,7 +161,7 @@ with tab2:
                 
             is_retained = prob >= best_threshold
             
-            st.markdown("### Prediction Outcome")
+            st.markdown("#### Prediction Outcome")
             if is_retained:
                 st.success(f"**Status: Retained** (Retention Probability: {prob:.1%})")
             else:
@@ -129,13 +170,14 @@ with tab2:
             fig_gauge = go.Figure(go.Indicator(
                 mode="gauge+number",
                 value=prob * 100,
-                title={'text': "Retention Probability Score"},
+                title={'text': "Retention Probability Score", 'font': {'color': 'white', 'size': 16}},
+                number={'suffix': "%", 'font': {'color': '#38bdf8'}},
                 gauge={
-                    'axis': {'range': [0, 100]},
+                    'axis': {'range': [0, 100], 'tickcolor': "white"},
                     'bar': {'color': "#a855f7"},
                     'steps': [
-                        {'range': [0, best_threshold * 100], 'color': "rgba(239, 68, 68, 0.3)"},
-                        {'range': [best_threshold * 100, 100], 'color': "rgba(34, 197, 94, 0.3)"}
+                        {'range': [0, best_threshold * 100], 'color': "rgba(239, 68, 68, 0.4)"},
+                        {'range': [best_threshold * 100, 100], 'color': "rgba(34, 197, 94, 0.4)"}
                     ],
                     'threshold': {
                         'line': {'color': "white", 'width': 4},
@@ -148,7 +190,7 @@ with tab2:
             st.plotly_chart(fig_gauge, use_container_width=True)
 
 with tab3:
-    st.subheader("Exploratory Data Overview")
+    st.markdown("### 📈 Exploratory Data Overview")
     uploaded_file = st.file_uploader("Upload CSV for dynamic analysis", type=['csv'])
     
     if uploaded_file is not None:
@@ -162,8 +204,12 @@ with tab3:
             barmode='overlay',
             title="Game Rounds Distribution (<= 100 Rounds)"
         )
-        fig_dist.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='white'))
+        fig_dist.update_layout(
+            paper_bgcolor='rgba(15, 23, 42, 0.6)', 
+            plot_bgcolor='rgba(15, 23, 42, 0.6)', 
+            font=dict(color='white')
+        )
         st.plotly_chart(fig_dist, use_container_width=True)
     else:
         st.info("Upload `cookie_cats.csv` to render real-time interactive exploratory plots.")
-            
+        
