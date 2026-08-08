@@ -71,15 +71,24 @@ st.markdown("""
         background-color: #334155 !important;
     }
     
-    /* FIX FOR FILE UPLOADER CONTROLS */
+    /* COMPLETE FIX FOR FILE UPLOADER & DROPZONE */
     [data-testid="stFileUploader"] {
-        background-color: rgba(30, 41, 59, 0.7) !important;
-        border: 1px dashed #a855f7 !important;
-        border-radius: 10px !important;
-        padding: 10px !important;
+        background-color: transparent !important;
     }
 
-    [data-testid="stFileUploader"] span, [data-testid="stFileUploader"] small, [data-testid="stFileUploader"] button {
+    [data-testid="stFileUploaderDropzone"] {
+        background-color: #1e293b !important;
+        border: 2px dashed #a855f7 !important;
+        border-radius: 12px !important;
+    }
+
+    [data-testid="stFileUploaderDropzone"] * {
+        color: #f8fafc !important;
+    }
+
+    [data-testid="stFileUploaderDropzone"] button {
+        background-color: #334155 !important;
+        border: 1px solid #a855f7 !important;
         color: #ffffff !important;
     }
 
@@ -233,4 +242,4 @@ with tab3:
         st.plotly_chart(fig_dist, use_container_width=True)
     else:
         st.info("Upload `cookie_cats.csv` to render real-time interactive exploratory plots.")
-        
+            
