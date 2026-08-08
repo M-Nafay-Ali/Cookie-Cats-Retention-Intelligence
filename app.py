@@ -47,7 +47,7 @@ st.markdown("""
         box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
     }
     </style>
-""", unsafe_allow_html=unsafe_allow_html)
+""", unsafe_allow_html=True)
 
 # Load Artifacts
 @st.cache_resource
@@ -166,4 +166,4 @@ with tab3:
         st.plotly_chart(fig_dist, use_container_width=True)
     else:
         st.info("Upload `cookie_cats.csv` to render real-time interactive exploratory plots.")
-  
+            
