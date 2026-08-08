@@ -13,39 +13,37 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Robust CSS Injection using Exact Data-TestIDs for Dark UI Contrast
+# Targeted CSS Overrides
 st.markdown("""
     <style>
-    /* Force dark background with vibrant gaming gradient overlay */
+    /* Dark Gaming Gradient Background */
     .stApp {
         background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%) !important;
         background-attachment: fixed !important;
     }
     
-    /* Global text color overrides for high readability */
-    h1, h2, h3, h4, h5, h6, p, label, span, div {
+    /* Headers & Body Text */
+    h1, h2, h3, h4, h5, h6, p, label {
         color: #f8fafc !important;
-        font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+        font-family: 'Segoe UI', Roboto, sans-serif;
     }
     
-    /* Title glowing accent */
+    /* Glowing Title Header */
     .main-title {
-        font-size: 2.3rem;
+        font-size: 2.2rem;
         font-weight: 800;
         background: linear-gradient(90deg, #a855f7, #ec4899, #3b82f6);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 0px;
     }
     
-    /* Card Container Styling for Metrics & Controls */
+    /* Metric Card Styling */
     [data-testid="stMetric"] {
         background: rgba(30, 41, 59, 0.75) !important;
         border: 1px solid rgba(168, 85, 247, 0.4) !important;
         border-radius: 12px !important;
         padding: 15px !important;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
-        backdrop-filter: blur(10px);
     }
     
     [data-testid="stMetricValue"] {
@@ -53,23 +51,52 @@ st.markdown("""
         font-weight: 700 !important;
     }
     
-    /* Styled Tab Bar */
+    /* FIX FOR DROPDOWN LISTS & SELECTBOX POPUPS */
+    div[data-baseweb="select"] > div {
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+        border-color: #6366f1 !important;
+    }
+
+    ul[data-baseweb="menu"] {
+        background-color: #1e293b !important;
+    }
+
+    li[data-baseweb="option"] {
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+    }
+
+    li[data-baseweb="option"]:hover {
+        background-color: #334155 !important;
+    }
+    
+    /* FIX FOR FILE UPLOADER CONTROLS */
+    [data-testid="stFileUploader"] {
+        background-color: rgba(30, 41, 59, 0.7) !important;
+        border: 1px dashed #a855f7 !important;
+        border-radius: 10px !important;
+        padding: 10px !important;
+    }
+
+    [data-testid="stFileUploader"] span, [data-testid="stFileUploader"] small, [data-testid="stFileUploader"] button {
+        color: #ffffff !important;
+    }
+
+    /* Tab bar customization */
     button[data-baseweb="tab"] {
         background-color: rgba(30, 41, 59, 0.5) !important;
         border-radius: 8px 8px 0px 0px !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
         color: #94a3b8 !important;
         font-weight: 600 !important;
-        padding: 10px 20px !important;
     }
     
     button[aria-selected="true"] {
         background: linear-gradient(90deg, #6366f1, #a855f7) !important;
         color: #ffffff !important;
-        border: none !important;
     }
     
-    /* Action Buttons */
+    /* Primary Predict Button */
     .stButton>button {
         background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%) !important;
         color: #ffffff !important;
@@ -77,13 +104,7 @@ st.markdown("""
         border: none !important;
         border-radius: 10px !important;
         padding: 12px 28px !important;
-        box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4) !important;
         width: 100%;
-    }
-    
-    .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6) !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -100,9 +121,9 @@ def load_artifacts():
 
 model, best_threshold = load_artifacts()
 
-# Custom Header Section
+# App Header
 st.markdown('<h1 class="main-title">🎮 Cookie Cats Retention Intelligence</h1>', unsafe_allow_html=True)
-st.markdown("<p style='color: #cbd5e1 !important; font-size: 1.05rem;'>A/B Testing Analytics & Machine Learning Early Churn Prediction Engine</p>", unsafe_allow_html=True)
+st.markdown("<p style='color: #cbd5e1 !important;'>A/B Testing Analytics & Machine Learning Early Churn Prediction Engine</p>", unsafe_allow_html=True)
 
 st.markdown("---")
 
